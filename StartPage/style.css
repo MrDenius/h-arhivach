@@ -1,0 +1,51 @@
+body {
+	background-color: #252526;
+	position: relative;
+	overflow: hidden;
+}
+
+.maincon {
+	margin: 0;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-right: -50%;
+	transform: translate(-50%, -50%);
+	width: 70%;
+}
+
+.text {
+	color: #fff;
+}
+
+.logo-img {
+	right: 0px;
+	height: 98px;
+}
+
+.main-text {
+	text-align: left;
+	font-size: 48px;
+}
+
+.log-text {
+	font-size: 18px;
+	color: #999;
+	margin: 0;
+}
+
+.logcon {
+	height: 80px;
+	margin-top: 20px;
+}
+
+#myProgress {
+	width: 100%;
+	background-color: grey;
+}
+
+#myBar {
+	width: 1%;
+	height: 30px;
+	background-color: green;
+}

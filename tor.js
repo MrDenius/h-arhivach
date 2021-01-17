@@ -1,7 +1,3 @@
-const { spawn } = require("child_process");
-const { exports, module, Math } = require("globalthis/implementation");
-const { maxBy } = require("lodash");
-
 module.exports = () => {
 	const { spawn } = require("child_process");
 	const crypto = require("crypto");
@@ -18,5 +14,16 @@ module.exports = () => {
 		"+__SocksPort",
 		"127.0.0.1:9150",
 	]);
+
+	const tr = require("tor-request");
+	let manager = {
+		newSesion: tr.newTorSession,
+		disponse: () => {
+			torProc.kill();
+			tr = undefined;
+			manager = undefined;
+		},
+	};
+
+	return manager;
 };
-Math.random();

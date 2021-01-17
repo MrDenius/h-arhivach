@@ -1,6 +1,13 @@
-const ProxyList = require("free-proxy");
-const proxyList = new ProxyList();
+const proxyParser = require("./proxyParser");
 //const request = require("request");
+
+const on = (event, callback) => {
+	switch (event) {
+		default:
+			proxyParser.on(event, callback);
+			break;
+	}
+};
 
 const proxySite = "https://api.getproxylist.com/proxy";
 
@@ -11,47 +18,44 @@ const proxySite = "https://api.getproxylist.com/proxy";
 const GetProxies = () => {
 	return new Promise((resolve, reject) => {
 		const validProxies = [];
-		proxyList
-			.get()
-			.then((proxys) => {
-				proxys.forEach((proxy) => {
-					if (
-						proxy.country != "RU" &&
-						Number.parseInt(proxy.speed_download) >= 150 &&
-						Number.parseInt(proxy.up_time) > 70 &&
-						Number.parseInt(proxy.connect_time) < 2
-					) {
-						validProxies.push(proxy);
-					}
-				});
+		proxyParser.GetProxy().then((proxy) =>
+			proxyParser
+				.GetValidProxy(proxy)
+				.then((proxys) => {
+					proxys.forEach((proxy) => {
+						if (
+							proxy.countryCode != "RU" &&
+							Number.parseInt(proxy.ping) <= 400
+						) {
+							validProxies.push(proxy);
+						}
+					});
 
-				const fProxies = validProxies
-					.map((x) => x)
-					.sort((a, b) => b.speed_download - a.speed_download);
-				const lProxies = validProxies
-					.map((x) => x)
-					.sort((a, b) => b.up_time - a.up_time);
+					const lProxies = validProxies
+						.map((x) => x)
+						.sort((a, b) => a.ping - b.ping);
 
-				resolve({
-					proxies: validProxies,
-					fasterProxies: fProxies,
-					latencyProxies: lProxies,
-				});
-			})
-			.catch(reject);
+					resolve({
+						proxies: validProxies,
+						lowPingProxies: lProxies,
+					});
+				})
+				.catch(reject)
+		);
 	});
 };
 
 const GetProxyRules = (proxis) => {
 	const rules = {
-		proxyRules: `${proxis[0].ip}:${proxis[0].port},`,
+		proxyRules: `socks4://${proxis[0].address},`,
 	};
 	proxis.forEach((proxy) => {
-		if (proxy.pot === proxis[0].port && proxis[0].url != proxy.url) {
-			rules.proxyRules += `${proxy.ip},`;
+		if (proxis[0].address != proxy.address) {
+			rules.proxyRules += `socks4://${proxy.address},`;
 		}
 	});
 	rules.proxyRules = rules.proxyRules.slice(0, -1);
+	console.log(rules.proxyRules);
 	return rules;
 };
 
@@ -77,4 +81,5 @@ module.exports = {
 	GetProxies: GetProxies,
 	CheckProxy: CheckProxy,
 	GetProxyRules: GetProxyRules,
+	on: on,
 };
