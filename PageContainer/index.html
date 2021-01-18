@@ -4,11 +4,114 @@
 		<meta charset="UTF-8" />
 		<title>Document</title>
 		<link rel="stylesheet" href="style.css" />
+		<link rel="stylesheet" href="url-style.css" />
 	</head>
 	<body>
-		<div class="masthead">
-			<label for="" class="ps mt-items"></label>
-			<button class="changeProxy mt-items">Change Proxy</button>
+		<div id="url-panel">
+			<div id="before-url-block">
+				<span
+					id="url-back"
+					class="url-btn"
+					data-i18n
+					data-i18n-title="browser_url.back_title"
+					title="Back"
+				>
+					<svg width="11" height="11" viewBox="0 0 11 11">
+						<polyline points="6,10.5 1,5.5 6,0.5 "></polyline>
+						<line x1="1" y1="5.5" x2="11" y2="5.5"></line>
+					</svg>
+				</span>
+
+				<span
+					id="url-next"
+					class="url-btn"
+					data-i18n
+					data-i18n-title="browser_url.next_title"
+					title="Next"
+				>
+					<svg width="11" height="11" viewBox="0 0 11 11">
+						<polyline points="5,10.5 10,5.5 5,0.5 "></polyline>
+						<line x1="0" y1="5.5" x2="10" y2="5.5"></line>
+					</svg>
+				</span>
+				<span
+					id="back-to-home"
+					class="small-url-btn"
+					data-i18n
+					data-i18n-title="browser_url.back_to_home_title"
+					title="To the start URL"
+				>
+					<svg width="12" height="12" viewBox="0 0 12 12">
+						<circle cx="6" cy="6" r="5.5" />
+					</svg>
+				</span>
+			</div>
+
+			<div id="url-block" class="input-border">
+				<div id="before-url-input">
+					<span
+						id="url-reload"
+						class="small-url-btn"
+						data-i18n
+						data-i18n-title="browser_url.reload_title"
+						title="Reload"
+					>
+						<svg width="14" height="12" viewBox="0 0 14 12">
+							<path
+								d="M11.5,6c0-3.037-2.463-5.5-5.5-5.5S0.5,2.962,0.5,6c0,3.038,2.463,5.5,5.5,5.5
+                                c1.52,0,2.895-0.616,3.89-1.61"
+							/>
+							<polygon
+								points="9.5,5.5 13.5,5.5 11.5,8 "
+							></polygon>
+						</svg>
+					</span>
+				</div>
+
+				<input id="url-input" spellcheck="false" />
+
+				<div id="after-url-input">
+					<span
+						id="url-save"
+						class="small-url-btn"
+						data-i18n
+						data-i18n-title="browser_url.save_title"
+						title="Save"
+					>
+						<svg width="12" height="9" viewBox="0 0 12 9">
+							<polyline
+								points="0.5,4.5 4.5,8.5 11.5,2.5 "
+							></polyline>
+						</svg>
+					</span>
+				</div>
+			</div>
+
+			<div id="after-url-block">
+				<span
+					id="browser-extra"
+					class="url-btn borderless"
+					data-i18n
+					data-i18n-title="menu.menu"
+					title="Menu"
+				>
+					<svg width="10" height="15">
+						<circle cx="5" cy="1.5" r="1.5" />
+						<circle cx="5" cy="7.5" r="1.5" />
+						<circle cx="5" cy="13.5" r="1.5" />
+					</svg>
+				</span>
+			</div>
+		</div>
+		<div id="extra-menu">
+			<div class="extra-menu-item" id="proxy-settings">
+				<label for="">Proxy address: <span class="ps"></span></label>
+				<br />
+				<button class="changeProxy extra-menu-item">
+					Change proxy
+				</button>
+			</div>
+			<div class="extra-menu-item" id="tor-settings"></div>
 		</div>
 		<iframe src="" frameborder="0" class="mainframe"></iframe>
 		<script src="./main.js"></script>

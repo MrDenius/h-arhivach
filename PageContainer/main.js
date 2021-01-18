@@ -1,6 +1,8 @@
 const { ipcRenderer } = require("electron");
 const mainFrame = document.querySelector(".mainframe");
-const masthead = document.querySelector(".masthead");
+const urlPanel = document.querySelector("#url-panel");
+const extraMenu = document.querySelector("#extra-menu");
+const UPManager = require("./urlPanelManager")();
 
 const Init = () => {
 	const Resize = () => {
@@ -9,8 +11,9 @@ const Init = () => {
 	Resize();
 	window.addEventListener("resize", Resize);
 
-	masthead.querySelector(".changeProxy").addEventListener("click", () => {
-		ipcRenderer.send("change-proxy");
+	extraMenu.querySelector(".changeProxy").addEventListener("click", () => {
+		ipcRenderer.sendSync("change-proxy");
+		mainFrame.src = mainFrame.src;
 	});
 
 	ipcRenderer
@@ -18,7 +21,7 @@ const Init = () => {
 			mainFrame.src = arg;
 		})
 		.on("proxy-server", (event, arg) => {
-			masthead.querySelector(".ps").innerHTML = arg;
+			extraMenu.querySelector(".ps").innerHTML = arg;
 		});
 
 	//endInit

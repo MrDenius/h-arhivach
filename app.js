@@ -87,12 +87,12 @@ const StartLoadArh = () => {
 					});
 					win.on("app-command", (e, cmd) => {
 						// Navigate the window back when the user hits their mouse back button
-						if (
-							cmd === "browser-backward" &&
-							win.webContents.canGoBack()
-						) {
-							win.webContents.goBack();
-						}
+						// if (
+						// 	cmd === "browser-backward" &&
+						// 	win.webContents.canGoBack()
+						// ) {
+						// 	win.webContents.goBack();
+						// }
 					});
 				})
 				.catch((err) => {
@@ -114,12 +114,14 @@ let reply = (e, m) => {
 ipcMain
 	.on("PConInited", (event) => {
 		_reply = event.reply;
-		//reply("url", "http://b91466et.beget.tech/");
-		reply("url", "http://ip-api.com/json/");
+		reply("url", "http://b91466et.beget.tech/");
+		//reply("url", "http://ip-api.com/json/");
 		reply("proxy-server", activeProxy);
 	})
-	.on("change-proxy", () => {
-		ChangeProxy();
+	.on("change-proxy", (event) => {
+		ChangeProxy()
+			.then(() => (event.returnValue = true))
+			.catch(() => (event.returnValue = false));
 	});
 
 app.on("window-all-closed", () => {
